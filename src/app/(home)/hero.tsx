@@ -1,19 +1,34 @@
-import { Heading, JoinWaitlist, Maxwidth, Paragraph } from '@/components'
+import {
+  GetStartedButton,
+  Heading,
+  Maxwidth,
+  Paragraph,
+  SubTitle,
+} from '@/components'
+import Image from 'next/image'
+import hero from '/public/hero-img.png'
 
 const Hero = () => {
   return (
-    <section tw="bg-primary text-white bg-primary bg-center bg-cover bg-[url(/hero-bg-mobile.png)] lg:(bg-[url(/hero-bg-desktop.png)])">
-      <Maxwidth tw="flex flex-col max-w-[53rem] text-center items-center justify-center gap-6 py-[9rem] px-6 lg:(py-[8rem])">
-        <Heading>Your Companion to Spiritual Growth</Heading>
+    <section tw="bg-primary text-white -mt-[6rem] lg:(-mt-[8rem])">
+      <Maxwidth tw="flex flex-col lg:(flex-row gap-[3rem]) xl:(gap-[11rem])">
+        <div tw="pt-[11rem] pb-12 px-6 gap-4 flex flex-col max-w-[29.5rem] lg:(py-[12rem] pl-[6.25rem] pr-0) xl:(py-[16rem])">
+          <SubTitle tw="pb-3 text-[0.875rem] lg:(text-lg)">
+            WE ARE INNOVATIVE
+          </SubTitle>
+          <Heading>Rifaaq Hub</Heading>
 
-        <Paragraph tw="pb-4">
-          At Rifaaq, we are dedicated to helping every member of the Muslim
-          community realize their full potential. Join our waitlist now to
-          access exclusive early benefits and embark on a path of spiritual
-          growth and personal development like never before.
-        </Paragraph>
+          <Paragraph tw="pb-4 lg:(pb-10)">
+            We pride ourselves in great work ethic, integrity and providing end
+            results.
+          </Paragraph>
 
-        <JoinWaitlist shadow />
+          <GetStartedButton />
+        </div>
+
+        <div tw="lg:(w-[60%])">
+          <Image alt="" src={hero} tw="w-full object-cover lg:(h-full)" />
+        </div>
       </Maxwidth>
     </section>
   )

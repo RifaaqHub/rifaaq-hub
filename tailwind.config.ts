@@ -12,7 +12,7 @@ export default {
       },
       fontFamily: {
         roboto: ['var(--font-inter)'],
-        serif: ['var(--font-roboto-serif)'],
+        'roboto-serif': ['var(--font-roboto-serif)'],
       },
     },
   },
