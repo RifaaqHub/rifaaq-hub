@@ -1,66 +1,41 @@
-import { Heading, Maxwidth, Paragraph } from '@/components'
-import tw from 'twin.macro'
+import { Heading, Maxwidth, Paragraph, SubTitle } from '@/components'
+import Image from 'next/image'
+import about from '/public/about.png'
 
 const About = () => {
-  const { vision, mission, distinction } = about
   return (
     <section id="about">
-      {[vision, mission, distinction].map(section => {
-        let isMission = section === mission,
-          isDistinction = section === distinction
+      <Maxwidth tw="flex flex-col relative lg:(flex-row items-center)">
+        <div tw="bg-[#212121] pt-[6.25rem] pb-[10rem] px-6 text-white flex flex-col gap-6 lg:(gap-10 w-[65%] px-[4rem] py-[10rem]) xl:(w-[53%] px-[6.12rem] py-[15.7rem])">
+          <SubTitle>WHO WE ARE</SubTitle>
+          <Heading $serif tw="text-secondary">
+            About Us
+          </Heading>
 
-        return (
-          <section
-            key={section.title}
-            css={[tw`bg-white`, isMission && tw`bg-[#EFF1F9]`]}
-          >
-            <Maxwidth
-              css={[
-                tw`flex flex-col gap-[4.65rem] py-20 px-6 md:(px-16) lg:(flex-row items-center px-[6.25rem])`,
-                isMission && tw`lg:(flex-row-reverse)`,
-              ]}
-            >
-              <div tw="flex-1 max-w-[700px]">
-                <Heading
-                  tw="pb-4 text-primary"
-                  as={'h2'}
-                  $variant={isDistinction ? 'h3' : 'h2'}
-                  css={[isDistinction && tw`text-[#212121] pb-7 lg:(pb-10)`]}
-                >
-                  {section.title}
-                </Heading>
-                <Paragraph>{section.text}</Paragraph>
-              </div>
+          <Paragraph tw="pt-6 pb-2 lg:(p-0 max-w-[29.5rem])">
+            At Rifaaq Hub, we are more than just a digital agency. We are a
+            passionate team of tech enthusiasts, developers, and designers who
+            believe in the transformative power of technology when harnessed
+            with purpose. Our mission is to empower individuals and businesses
+            with innovative digital solutions that drive growth, create value,
+            and leave a positive impact.
+          </Paragraph>
 
-              <div
-                tw="relative h-[18.5rem] bg-contain bg-no-repeat w-full max-w-[21rem] mx-auto lg:(max-w-[28.5rem] h-[27.5rem])"
-                css={{ backgroundImage: `url(${section.img})` }}
-              />
-            </Maxwidth>
-          </section>
-        )
-      })}
+          <Paragraph tw="lg:(max-w-[29.5rem])">
+            Whether you are a startup, a growing business, or an organization
+            with a purpose, Rifaaq Hub is committed to your success. From the
+            inception of an idea to the final delivery of a digital product, we
+            work with unwavering dedication to ensure that your objectives are
+            met and your aspirations realized.
+          </Paragraph>
+        </div>
+
+        <div tw="px-4 mx-auto -mt-[4.4rem] lg:(mx-0 mt-0 p-0 absolute right-[0] w-[30rem]) xl:(left-[45%] w-[41.5rem])">
+          <Image src={about} alt="" />
+        </div>
+      </Maxwidth>
     </section>
   )
-}
-
-const about = {
-  mission: {
-    title: 'Our Vision',
-    text: 'Our vision is to become a leading force in the Muslim world, making far-reaching positive impacts in the lives of African Muslims and the world at large.',
-    img: '/mission.png',
-  },
-  vision: {
-    title: 'Our Mision',
-    text: 'Our mission is to assist every member of the Muslim community in becoming the best version of themselves spiritually and in all aspects of life.',
-    img: '/vision.png',
-  },
-  distinction: {
-    title:
-      '“What sets us apart is our ability to present individuals with simple continuous steps leading to their ultimate better version”',
-    text: 'We are striving to give every Muslim, whether learned or just finding their feet, a reliable associate that makes the journey so easy through our platform. We also leverage other available resources from the wider Muslim community to provide our users with the best possible experience.',
-    img: '/distinction.png',
-  },
 }
 
 export default About

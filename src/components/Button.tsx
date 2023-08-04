@@ -1,3 +1,4 @@
+import routePaths from '@/lib/routes'
 import { ComponentPropsWithoutRef } from 'react'
 import tw, { styled, css } from 'twin.macro'
 
@@ -28,12 +29,18 @@ const Button = styled.button<ButtonProps>(({ $variant, $isSmall, $shadow }) => [
   // `,
 ])
 
-export const JoinWaitlist = ({
+export const GetStartedButton = ({
   shadow,
   ...props
 }: { shadow?: boolean } & ComponentPropsWithoutRef<'a'>) => (
-  <Button as={'a'} href="#join-waitlist" $shadow={shadow} {...props}>
-    Join Our Waitlist
+  <Button
+    tw="max-w-[10.1rem]"
+    as={'a'}
+    href={routePaths.contact.path}
+    $shadow={shadow}
+    {...props}
+  >
+    Get Started
   </Button>
 )
 
