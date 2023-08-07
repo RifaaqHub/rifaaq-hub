@@ -1,3 +1,5 @@
+'use client'
+
 import { Button, Heading, Maxwidth, Paragraph, SubTitle } from '@/components'
 import { contactFormInputs } from '@/types'
 import Image from 'next/image'
@@ -7,13 +9,16 @@ import { AiOutlineMail, AiTwotonePhone } from 'react-icons/ai'
 import { GoLocation } from 'react-icons/go'
 import contactImg from '/public/contact.png'
 import tw from 'twin.macro'
+import useSubmitContactForm from './submit-contact-form/useSubmitForm'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
+import { useCallback } from 'react'
 
 const ContactForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    control,
+    formState: { errors, isSubmitting },
+    reset,
   } = useForm<contactFormInputs>({
     defaultValues: {
       email: '',
@@ -23,12 +28,23 @@ const ContactForm = () => {
     },
   })
 
-  // const { mutate: join } = useJoinWaitList()
+  const { executeRecaptcha } = useGoogleReCaptcha()
+
+  const handleRecaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      return
+    }
+
+    return await executeRecaptcha('contact_form')
+  }, [executeRecaptcha])
+
+  const { mutate: sendForm, isLoading } = useSubmitContactForm()
 
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-  const subscribe = (data: contactFormInputs) => {
-    // join(data)
+  const subscribe = async (data: contactFormInputs) => {
+    const token = await handleRecaptchaVerify()
+    sendForm({ data, token }, { onSuccess: () => reset() })
   }
 
   return (
@@ -69,6 +85,7 @@ const ContactForm = () => {
                     {...register(field.field as keyof contactFormInputs, {
                       required: true,
                       minLength: 3,
+                      pattern: field.field === 'email' ? emailPattern : /.{3,}/,
                     })}
                     css={styles}
                   />
@@ -77,12 +94,18 @@ const ContactForm = () => {
             )
           })}
 
-          <Button tw="w-full md:(max-w-[17.2rem] mr-auto)">Contact Us</Button>
+          <Button
+            disabled={isSubmitting || isLoading}
+            tw="w-full md:(max-w-[17.2rem] mr-auto) disabled:(cursor-not-allowed)"
+          >
+            Contact Us
+          </Button>
+          <div id="recap" />
         </form>
       </div>
 
-      <footer tw="bg-primary relative text-white px-[2.62rem] py-[3.81rem] md:(px-[3rem]) lg:(flex gap-8 items-center py-[10rem] max-w-[60%]) xl:(py-[13rem] gap-[5rem])">
-        <div tw="mx-auto relative top-[-9rem] lg:(top-0 left-[-15%]) xl:(w-[31.75rem] left-[-20%])">
+      <footer tw="bg-primary relative text-white px-[2.62rem] py-[3.81rem] md:(px-[3rem]) lg:(flex gap-8 items-center py-[10rem] max-w-[50%]) xl:(py-[13rem] max-w-[60%] gap-[5rem])">
+        <div tw="mx-auto relative top-[-9rem] lg:(top-0 left-[-20%]) xl:(w-[31.75rem])">
           <Image alt="" src={contactImg} tw="w-full object-cover" />
         </div>
 

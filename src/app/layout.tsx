@@ -4,6 +4,7 @@ import StyledComponentsRegistry from '@/lib/registry'
 import '@/styles/globals.css'
 
 import { Roboto, Roboto_Serif } from 'next/font/google'
+import AppProviders from './providers'
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -34,7 +35,7 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <GlobalStyles />
-          <>{children}</>
+          <AppProviders>{children}</AppProviders>
         </StyledComponentsRegistry>
       </body>
     </html>

@@ -73,7 +73,7 @@ const MobileNav = () => {
               onClick={toggleMenu}
               css={[tw`hover:underline`, menuOpen && tw`px-4`]}
             >
-              <Link href={link.href}>{link.title}</Link>
+              <a href={link.href}>{link.title}</a>
             </li>
           ))}
         </ul>
